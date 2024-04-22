@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Rate, Space, Table, Tag } from 'antd';
+import { Link } from 'react-router-dom';
 
 const makeFirstUpper = (text) => {
     return text[0].toUpperCase() + text.slice(1);
 }
 
 const confirm = (id) => {
-    console.log("Deleting product: ", id);
-    message.success('Deleting product...');
+    console.log("Deleting pizza: ", id);
+    message.success('Deleting pizza...');
 };
 
 const columns = [
@@ -18,13 +19,13 @@ const columns = [
     },
     {
         title: 'Image',
-        dataIndex: 'thumbnail',
-        key: 'thumbnail',
-        render: (text) => <img style={imageStyles} src={text} alt='Product Image' />
+        dataIndex: 'imageUrl',
+        key: 'imageUrl',
+        render: (text) => <img style={imageStyles} src={text} alt='Pizza Image' />
     },
     {
         title: 'Name',
-        dataIndex: 'title',
+        dataIndex: 'name',
         key: 'name'
     },
     {
@@ -34,15 +35,15 @@ const columns = [
         render: (text) => <span>{text}$</span>
     },
     {
-        title: 'Category',
-        dataIndex: 'category',
-        key: 'category',
+        title: 'Pizza Size',
+        dataIndex: 'pizzaSizeDiametr',
+        key: 'pizzaSizeDiametr',
         render: (text) => <span>{makeFirstUpper(text)}</span>
     },
     {
-        title: 'Rating',
-        dataIndex: 'rating',
-        key: 'rating',
+        title: 'Cooking Time',
+        dataIndex: 'cookingTimeMin',
+        key: 'cookingTimeMin',
         render: (text) => <Rate allowHalf disabled defaultValue={text} />
     },
     {
@@ -52,8 +53,8 @@ const columns = [
             <Space size="middle">
                 <a>Show</a>
                 <Popconfirm
-                    title="Delete the task"
-                    description="Are you sure to delete this task?"
+                    title="Delete the pizza"
+                    description="Are you sure to delete this pizza?"
                     onConfirm={() => confirm(record.id)}
                     okText="Yes"
                     cancelText="No"
@@ -65,25 +66,32 @@ const columns = [
     },
 ];
 
-const api = "https://dummyjson.com/products";
+const api = "https://localhost:7283/api/Pizza/all";
 
 export default function Products() {
 
-    const [products, setProducts] = useState([]);
+    const [pizzas, setPizzas] = useState([]);
 
-    const loadProducts = async () => {
+    const loadPizzas = async () => {
         const response = await fetch(api);
         const data = await response.json();
+        console.log(response);
+        console.log(data);
 
-        setProducts(data.products);
+        setPizzas(data.pizzas);
     }
 
     useEffect(() => {
-        loadProducts();
+        loadPizzas();
     }, []);
 
     return (
-        <Table columns={columns} dataSource={products} pagination={{ pageSize: 5 }} />
+        <>
+            <Button style={{ marginBottom: 10 }} type="primary">
+                <Link to="create">Create New Pizza</Link>
+            </Button>
+            <Table columns={columns} dataSource={pizzas} pagination={{ pageSize: 5 }} rowKey="id" />
+        </>
     );
 }
 
