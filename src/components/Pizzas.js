@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Rate, Space, Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-
-const makeFirstUpper = (text) => {
-    return text[0].toUpperCase() + text.slice(1);
-}
+import { DeleteOutlined } from '@ant-design/icons';
+import { makeFirstUpper } from '../utils/utils';
 
 const confirm = (id) => {
     console.log("Deleting pizza: ", id);
@@ -53,13 +51,14 @@ const columns = [
             <Space size="middle">
                 <a>Show</a>
                 <Popconfirm
-                    title="Delete the pizza"
-                    description="Are you sure to delete this pizza?"
+                    title="Delete this pizza?"
+                    description={`Are you sure to delete ${record.title}?`}
                     onConfirm={() => confirm(record.id)}
                     okText="Yes"
                     cancelText="No"
+                    placement="left"
                 >
-                    <Button danger>Delete</Button>
+                     <Button danger icon={<DeleteOutlined />}></Button>
                 </Popconfirm>
             </Space>
         ),
