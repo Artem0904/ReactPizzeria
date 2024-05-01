@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button,  Form, Input, InputNumber, Select, Space } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-
+import { pizzasService } from '../server/pizzas';
 
 const pizzaSizes = [
     { value: 1, label: "15" },
@@ -19,11 +19,12 @@ export default function CreateForm({ pizza }) {
         }
     }, [pizza, form]);
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log(values);    
 
-        //
+        const response = await pizzasService.create(values);
 
+        console.log(response.statusText);
     };
     const onReset = () => {
         form.resetFields();
