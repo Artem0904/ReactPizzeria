@@ -9,6 +9,9 @@ export const pizzasService = {
     get: function () {
         return api.get('all');
     },
+    getPizzaSizes: function () {
+        return api.get('pizzaSizes');
+    },
     create: function (model) {
 
         const formData = new FormData();

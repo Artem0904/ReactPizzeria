@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button,  Form, Input, InputNumber, Select, Space } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { pizzasService } from '../server/pizzas';
 
-const pizzaSizes = [
-    { value: 1, label: "15" },
-    { value: 2, label: "30" },
-    { value: 3, label: "50" },
-]
-
 export default function CreateForm({ pizza }) {
 
+    const [pizzaSizes, setPizzaSizes] = useState([]);
     const [form] = Form.useForm();
 
+    const loadPizzaSizes = async () => {
+        const response = await productsService.getPizzaSizes();
+
+        // change property names: id -> value, name -> label
+        const mapped = response.data.map(function (x) { return { value: x.id, label: x.diametr } });
+        setPizzaSizes(mapped);
+    }
+
     useEffect(() => {
+        loadPizzaSizes();
         if (pizza) {
             form.setFieldsValue(pizza);
         }
@@ -118,8 +122,7 @@ export default function CreateForm({ pizza }) {
                 >
                     <Select
                         placeholder="Select a pizza size"
-                        options={pizzaSizes}
-                    >
+                        options={pizzaSizes}>
                     </Select>
                 </Form.Item>
 

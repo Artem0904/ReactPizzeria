@@ -79,9 +79,8 @@ export default function Products() {
 
         const res = await pizzasService.delete(id);
 
-        if (res.status == 200) {
-            setPizzas(pizzas.filter(x => x.id != id));
-            message.success('Pizza deleted successfully!');
+        if (res.status === 200) {
+            setPizzas(pizzas.filter(x => x.id !== id));
         }
     };
 
