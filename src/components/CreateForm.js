@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Input, InputNumber, Select, Space, Upload } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { UploadOutlined } from '@ant-design/icons';
+import { createPizza } from '../services/pizzas';
 const { Option } = Select;
 
-export default function CreateForm() {
+
+const pizzaSizes = [
+    { value: 1, label: "15" },
+    { value: 2, label: "30" },
+    { value: 3, label: "50" },
+]
+
+export default function CreateForm({ pizza }) {
+
+    useEffect(() => {
+        if (pizza) {
+            form.setFieldsValue(pizza);
+        }
+    }, []);
 
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        console.log(values);
+        console.log(values);    
+
+        //
+
     };
     const onReset = () => {
         form.resetFields();
@@ -92,8 +109,9 @@ export default function CreateForm() {
                 </div>
 
                 <Form.Item
-                    name="pizzaSizeDiametr"
+                    name="pizzaSizeId"
                     label="Pizza size"
+                    initialValue={1}
                     rules={[
                         {
                             required: true,
@@ -102,11 +120,8 @@ export default function CreateForm() {
                 >
                     <Select
                         placeholder="Select a pizza size"
-                        allowClear
+                        options={pizzaSizes}
                     >
-                        <Option value="1">15</Option>
-                        <Option value="2">30</Option>
-                        <Option value="3">50</Option>
                     </Select>
                 </Form.Item>
 

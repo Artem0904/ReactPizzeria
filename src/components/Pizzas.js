@@ -3,6 +3,7 @@ import { Button, message, Popconfirm, Rate, Space, Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import { makeFirstUpper } from '../utils/utils';
+import { getPizzas } from '../services/pizzas';
 
 const confirm = (id) => {
     console.log("Deleting pizza: ", id);
@@ -35,14 +36,13 @@ const columns = [
     {
         title: 'Pizza Size',
         dataIndex: 'pizzaSizeDiametr',
-        key: 'pizzaSizeDiametr',
-        render: (text) => <span>{makeFirstUpper(text)}</span>
+        key: 'pizzaSizeDiametr'
     },
     {
         title: 'Cooking Time',
         dataIndex: 'cookingTimeMin',
         key: 'cookingTimeMin',
-        render: (text) => <Rate allowHalf disabled defaultValue={text} />
+        render: (text) => <span>{text}m</span>
     },
     {
         title: 'Action',
@@ -72,12 +72,11 @@ export default function Products() {
     const [pizzas, setPizzas] = useState([]);
 
     const loadPizzas = async () => {
-        const response = await fetch(api);
-        const data = await response.json();
-        console.log(response);
-        console.log(data);
+        //const response = await fetch(api);
+        //const data = await response.json();
 
-        setPizzas(data.pizzas);
+        const response = await getPizzas();
+        setPizzas(response.data);
     }
 
     useEffect(() => {
@@ -86,17 +85,22 @@ export default function Products() {
 
     return (
         <>
-            <Button style={{ marginBottom: 10 }} type="primary">
-                <Link to="create">Create New Pizza</Link>
-            </Button>
+            <Space>
+                <Button style={{ marginBottom: 10 }} type="primary">
+                    <Link to="create">Create New Pizza</Link>
+                </Button>
+                <Button style={{ marginBottom: 10 }} type="primary">
+                    <Link to="edit">Test Edit</Link>
+                </Button>
+            </Space>
             <Table columns={columns} dataSource={pizzas} pagination={{ pageSize: 5 }} rowKey="id" />
         </>
     );
 }
 
 const imageStyles = {
-    width: 100,
-    height: 50,
+    width: 55,
+    height: 55,
     objectFit: "cover",
     borderRadius: 6
 }
