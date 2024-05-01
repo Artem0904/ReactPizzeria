@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import { Button, Checkbox, Form, Input, InputNumber, Select, Space, Upload } from 'antd';
+import { Button,  Form, Input, InputNumber, Select, Space } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { UploadOutlined } from '@ant-design/icons';
-import { createPizza } from '../services/pizzas';
-const { Option } = Select;
 
 
 const pizzaSizes = [
@@ -14,13 +11,13 @@ const pizzaSizes = [
 
 export default function CreateForm({ pizza }) {
 
+    const [form] = Form.useForm();
+
     useEffect(() => {
         if (pizza) {
             form.setFieldsValue(pizza);
         }
-    }, []);
-
-    const [form] = Form.useForm();
+    }, [pizza, form]);
 
     const onFinish = (values) => {
         console.log(values);    
@@ -31,12 +28,12 @@ export default function CreateForm({ pizza }) {
     const onReset = () => {
         form.resetFields();
     };
-    const normFile = (e) => {
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e?.file;
-    };
+    // const normFile = (e) => {
+    //     if (Array.isArray(e)) {
+    //         return e;
+    //     }
+    //     return e?.file;
+    // };
 
     return (
         <>
