@@ -18,9 +18,8 @@ export default function Home() {
         loadPizzas();
     }, []);
 
-
     return (
-      <Flex wrap="wrap" gap="small" >
+      <Flex style={{justifyContent: "space-between"}} wrap="wrap" gap="small" >
         {pizzas.map(pizza => (
             <div key={pizza.id} >
                 <Card
