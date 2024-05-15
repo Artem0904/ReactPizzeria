@@ -9,7 +9,7 @@ export default function CreateForm({ pizza }) {
     const [form] = Form.useForm();
 
     const loadPizzaSizes = async () => {
-        const response = await productsService.getPizzaSizes();
+        const response = await pizzasService.getPizzaSizes();
 
         // change property names: id -> value, name -> label
         const mapped = response.data.map(function (x) { return { value: x.id, label: x.diametr } });

@@ -18,26 +18,29 @@ export default function Home() {
         loadPizzas();
     }, []);
 
-    const App = () => (
-      <Card
-        hoverable
-        style={{
-          width: 240,
-        }}
-        cover={<img alt="pizza" src="" />}
-      >
-        <Meta title="" description="" />
-      </Card>
-    );
 
     return (
-        <Flex wrap gap="small" dataSource={pizzas}>
-          {Array.from({length: 24,},
-            (_, i) => (
-                <div>{App()}</div>
-            ),
-          )}
-        </Flex>
+      <Flex wrap="wrap" gap="small" >
+        {pizzas.map(pizza => (
+            <div key={pizza.id} >
+                <Card
+                    hoverable
+                    style={{ width: 240 }}
+                    cover={<div style={{height: 250}}>
+                        <img style={imageStyles} alt="pizza" src={pizza.imageUrl} />
+                      </div>}
+                >
+                    <Meta title={pizza.name} description={pizza.description} />
+                </Card>
+            </div>
+        ))}
+      </Flex>
     )
 }
 
+const imageStyles = { 
+  width: '100%',
+  height: '100%',  
+  objectFit: "cover",
+  borderRadius: 6
+}
