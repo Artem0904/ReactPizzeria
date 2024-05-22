@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Pizzas from './components/Pizzas';
+import Beverages from './components/Beverages';
 import CreateForm from './components/CreateForm';
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
           <Route path="pizzas" element={<Pizzas/>}/>
           <Route path="pizzas/create" element={<CreateForm />} />
           <Route path="pizzas/edit/:id" element={<CreateForm />} />
-          <Route path="beverages" element={<p>Beverages</p>} />
+          <Route path="beverages" element={<Beverages />} />
           <Route path="*" element={<p>Page Not Found!</p>} />
         </Route>
       </Routes>
