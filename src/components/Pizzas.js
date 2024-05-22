@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space, Table } from 'antd';
 import { Link } from 'react-router-dom';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { pizzasService } from '../server/pizzas';
 
 
@@ -47,6 +47,9 @@ function getColumns(deleteHandler) {
             render: (_, record) => (
                 <Space size="middle">
                     <a href='/'>Show</a>
+                    <Link to={`edit/${record.id}`}>
+                        <Button icon={<EditOutlined />}></Button>
+                    </Link>
                     <Popconfirm
                         title="Delete the pizza"
                         description={`Are you sure to delete ${record.title}?`}
@@ -63,7 +66,7 @@ function getColumns(deleteHandler) {
     ];
 }
 
-export default function Products() {
+export default function Pizzas() {
 
     const [pizzas, setPizzas] = useState([]);
 

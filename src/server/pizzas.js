@@ -12,6 +12,9 @@ export const pizzasService = {
     getPizzaSizes: function () {
         return api.get('pizzaSizes');
     },
+    getById: function (id) {
+        return api.get(`${id}`);
+    },
     create: function (model) {
 
         const formData = new FormData();
@@ -24,6 +27,9 @@ export const pizzasService = {
     },
     delete: function (id) {
         return api.delete(`${id}`);
+    },
+    edit: function (model) {
+        return api.put("", model);
     }
 }
 

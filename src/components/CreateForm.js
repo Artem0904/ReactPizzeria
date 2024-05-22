@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button,  Form, Input, InputNumber, Select, Space } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Select, Space, Upload, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { pizzasService } from '../server/pizzas';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CreateForm({ pizza }) {
+let pizza = null;
+export default function CreateForm() {
 
     const [pizzaSizes, setPizzaSizes] = useState([]);
     const [form] = Form.useForm();
+    const params = useParams();
+    const navigate = useNavigate();
+    const [editMode, setEditMode] = useState(false);
 
     const loadPizzaSizes = async () => {
         const response = await pizzasService.getPizzaSizes();
@@ -18,6 +23,7 @@ export default function CreateForm({ pizza }) {
 
     useEffect(() => {
         loadPizzaSizes();
+        loadInitialPizza();
         if (pizza) {
             form.setFieldsValue(pizza);
         }
@@ -28,11 +34,45 @@ export default function CreateForm({ pizza }) {
 
         const response = await pizzasService.create(values);
 
-        console.log(response.statusText);
+        if (editMode) {
+            values.id = pizza.id;
+            console.log(values.id);
+            values.imageUrl = pizza.imageUrl;
+
+            const res = await pizzasService.edit(values);
+
+            if (res.status === 200) {
+                message.success("Pizza edited successfully!");
+            }
+        }
+        else {
+            values.image = values.image.originFileObj;
+            // send to server
+            const res = await pizzasService.create(values);
+
+            if (res.status === 200) {
+                message.success("Pizza created successfully!");
+            }
+        }
+
+        navigate(-1);
     };
     const onReset = () => {
         form.resetFields();
     };
+
+    const loadInitialPizza = async () => {
+        if (params.id) {
+            setEditMode(true);
+
+            const res = await pizzasService.getById(params.id);
+            if (res.status !== 200) return; // todo: throw exception
+
+            pizza = res.data;
+            form.setFieldsValue(res.data);
+        }
+    };
+
     // const normFile = (e) => {
     //     if (Array.isArray(e)) {
     //         return e;
@@ -42,7 +82,7 @@ export default function CreateForm({ pizza }) {
 
     return (
         <>
-            <h1>Create New Pizza</h1>
+            <h1 style={{ textAlign: "center" }}>{editMode ? 'Edit' : 'Create'} Pizza</h1>
             <Form
                 form={form}
                 name="control-hooks"
@@ -167,7 +207,7 @@ export default function CreateForm({ pizza }) {
 
                     <Space>
                         <Button type="primary" htmlType="submit">
-                            Create
+                            {editMode ? "Edit" : "Create"}
                         </Button>
                         <Button htmlType="button" onClick={onReset}>
                             Reset

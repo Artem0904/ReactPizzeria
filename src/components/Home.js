@@ -51,7 +51,7 @@ export default function Home() {
           </div>
 
         <div>
-          <h1 style={h1Style}>Pizzas</h1>
+          <h1 style={h1Style}>Most popular pizzas</h1>
           <Flex style={{justifyContent: "space-between"}} wrap="wrap" gap="small" >
             {pizzas.map(pizza => (
                 <div key={pizza.id} >
