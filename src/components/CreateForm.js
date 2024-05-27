@@ -32,8 +32,6 @@ export default function CreateForm() {
     const onFinish = async (values) => {
         console.log(values);    
 
-        const response = await pizzasService.create(values);
-
         if (editMode) {
             values.id = pizza.id;
             console.log(values.id);
@@ -46,7 +44,7 @@ export default function CreateForm() {
             }
         }
         else {
-            values.image = values.image.originFileObj;
+            values.imageUrl = values.imageUrl;
             // send to server
             const res = await pizzasService.create(values);
 

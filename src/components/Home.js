@@ -47,7 +47,6 @@ export default function Home() {
                     <img style={CarouselImageStyle} alt='test' src="https://www.shutterstock.com/image-photo/cheese-pizza-lovers-600nw-1101316754.jpg" />
                 </div>
             </Carousel>
-
         </div>
 
         <div>
