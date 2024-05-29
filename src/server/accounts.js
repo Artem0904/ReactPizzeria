@@ -1,12 +1,16 @@
 import axios from "axios";
+import { tokensService } from "./tokens";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL + "accounts/"
+    baseURL: process.env.REACT_APP_API_URL + "accounts"
 });
 
 // ----- create service object
 export const accountsService = {
     login: function (model) {
         return api.post('login', model);
+    },
+    logout: async function () {
+        await api.post('logout');
     }
 }

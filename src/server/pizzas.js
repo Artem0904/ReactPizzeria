@@ -1,8 +1,22 @@
 import axios from "axios";
+import { tokensService } from "./tokens";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL + "pizza/"
+    baseURL: process.env.REACT_APP_API_URL + "pizza"
 });
+
+api.interceptors.request.use(
+    (config) => {
+        // Get token and add it to header "Authorization" from secure storgage
+        const token = tokensService.getAccessToken();
+        console.log(token);
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 // ----- create service object
 export const pizzasService = {

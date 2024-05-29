@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space, Table } from 'antd';
 import { Link, useNavigate  } from 'react-router-dom';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, InfoCircleFilled  } from '@ant-design/icons';
 import { pizzasService } from '../server/pizzas';
 
 
@@ -46,7 +46,9 @@ function getColumns(deleteHandler) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <a href='/'>Show</a>
+                    {/* <Link to={`pizzaInfo/`}>
+                        <Button icon={<InfoCircleFilled />}></Button>
+                    </Link> */}
                     <Link to={`edit/${record.id}`}>
                         <Button icon={<EditOutlined />}></Button>
                     </Link>
