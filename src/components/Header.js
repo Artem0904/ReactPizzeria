@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Layout as AntdLayout, Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeOutlined, InfoCircleOutlined, ProductOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { HomeOutlined, InfoCircleOutlined, ProductOutlined, UnorderedListOutlined, LoginOutlined } from '@ant-design/icons';
 
 const { Header: AntdHeader } = AntdLayout;
 
@@ -57,6 +57,11 @@ export default function Header() {
                     <span>About</span>
                     <Link to="/about" />
                 </Menu.Item>
+                <Menu.Item key="/login">
+                    <LoginOutlined />
+                    <Link to="/login">Login</Link>
+                </Menu.Item>
+                
             </Menu>
         </AntdHeader>
     )

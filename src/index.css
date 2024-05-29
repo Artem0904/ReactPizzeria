@@ -16,12 +16,13 @@ code {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* background: rgb(21,13,153);
+  background: linear-gradient(90deg, rgba(21,13,153,1) 0%, rgba(107,107,168,1) 50%, rgba(0,212,255,1) 100%); */
 }
 
 .Layout .main {
   flex-grow: 1;
-  max-width: 70%;
-  width: auto;
+  width: 70%;
   margin: auto;
   justify-content: flex-start;
 }

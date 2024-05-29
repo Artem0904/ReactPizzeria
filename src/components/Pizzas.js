@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Space, Table } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { pizzasService } from '../server/pizzas';
 
@@ -96,9 +96,6 @@ export default function Pizzas() {
             <Space>
                 <Button style={{ marginBottom: 10 }} type="primary">
                     <Link to="create">Create New Pizza</Link>
-                </Button>
-                <Button style={{ marginBottom: 10 }} type="primary">
-                    <Link to="edit">Test Edit</Link>
                 </Button>
             </Space>
             <Table columns={getColumns(deletePizza)} dataSource={pizzas} pagination={{ pageSize: 5 }} rowKey="id" />

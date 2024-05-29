@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input, InputNumber, Select, Space, Upload, message } from 'antd';
+import {StepBackwardOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'; 
 import TextArea from 'antd/es/input/TextArea';
 import { pizzasService } from '../server/pizzas';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -80,6 +81,10 @@ export default function CreateForm() {
 
     return (
         <>
+            <Button htmlType="button"  onClick={() => navigate(-1)}>
+                <StepBackwardOutlined />
+                Back
+            </Button>
             <h1 style={{ textAlign: "center" }}>{editMode ? 'Edit' : 'Create'} Pizza</h1>
             <Form
                 form={form}
@@ -205,9 +210,11 @@ export default function CreateForm() {
 
                     <Space>
                         <Button type="primary" htmlType="submit">
+                            <CheckOutlined />
                             {editMode ? "Edit" : "Create"}
                         </Button>
                         <Button htmlType="button" onClick={onReset}>
+                            <CloseOutlined />
                             Reset
                         </Button>
                     </Space>
