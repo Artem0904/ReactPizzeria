@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { accountsService } from '../server/accounts';
 import { tokensService } from '../server/tokens';
 import { useNavigate } from 'react-router-dom';
-
+import { AccountsContext } from '../contexts/account.context';
 
 export default function Login() {
     const navigate = useNavigate();
-    
+    const { login } = useContext(AccountsContext);
+
     const onFinish = async (values) => {
         console.log('Success:', values);
-    
+
         const res = await accountsService.login(values);
-    
+
         if (res.status !== 200) {
             message.console.error("Something went wrong!");
             return;
         }
 
         tokensService.save(res.data);
+
         message.success("Your logged in successfully!");
         navigate(-1);
     };

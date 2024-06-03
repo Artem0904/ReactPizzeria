@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Layout as AntdLayout, Menu } from 'antd';
+import { Layout as AntdLayout, Menu, Space } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeOutlined, InfoCircleOutlined, ProductOutlined, UnorderedListOutlined, LoginOutlined } from '@ant-design/icons';
+import { HomeOutlined, InfoCircleOutlined, ProductOutlined, UnorderedListOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { AccountsContext } from '../contexts/account.context';
+import { accountsService } from '../server/accounts';
 
 const { Header: AntdHeader } = AntdLayout;
 
 export default function Header() {
     
+    const { email, isAuth, logout } = useContext(AccountsContext);
     let location = useLocation();
 
     const [current, setCurrent] = useState(location.pathname);
@@ -18,6 +21,11 @@ export default function Header() {
             }
         }
     }, [location, current]);
+
+    const onLogout = () => {
+        accountsService.logout();
+        logout();
+    }
 
 
     return (
@@ -56,13 +64,26 @@ export default function Header() {
                     <InfoCircleOutlined />
                     <span>About</span>
                     <Link to="/about" />
-                </Menu.Item>
-                <Menu.Item key="/login">
-                    <LoginOutlined />
-                    <Link to="/login">Login</Link>
-                </Menu.Item>
-                
+                </Menu.Item>    
             </Menu>
+
+            {
+                isAuth
+                    ?
+                    <Space>
+                        <span style={{ color: "white" }}>Hello, {email}</span>
+                        <Link onClick={onLogout} style={{ color: "white" }}><LogoutOutlined /></Link>
+                        {console.log(`hello, ${email}`)}
+                    </Space>
+                    :
+                    <Link to="/login" style={{ color: "white" }}>
+                        {console.log(`aaaaaaaaaa, ${email}`)}
+                        <Space size="small">
+                            <LogoutOutlined />
+                            <span>Login</span>
+                        </Space>
+                    </Link>
+            }
         </AntdHeader>
     )
 }
